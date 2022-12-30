@@ -1,6 +1,6 @@
 # Alloy homework
 
-# assignment
+## Assignment
 topic: models in VDM or Alloy
 
 task 1: create model for "smart home" or "automated smart warehouse"
@@ -37,7 +37,12 @@ resources for "automated smart warehouse" (some in Czech)
 	https://www.netsuite.com/portal/resource/articles/inventory-management/warehouse-automation.shtml
 	https://www.selecthub.com/warehouse-management/building-automated-warehouse-system/
 
-# documentaion
+## Documentaion
 
-I have decided to do the smart home version in alloy. The solution is heavily inspired by "smart home" from google. Devices ihnerit from abstract base `Device` and each device contains given set of traits. Those devices are then assigned to rooms. Everything is identified by an unique ID.
+I have decided to do the smart home version in alloy. The solution is inspired by "smart home" from google. It must be said that this model of smart home is very simple and some details were ommited for brevity as compared to the google inspiration.
 
+There is one `Home` which consists of `Room`s. Devices ihnerit from an abstract base `Device` and are further divided into indoor and outdoor devices for simpler definition of concrete devices such as `Lawnmover` or `Lock` . Concrete devices contains specific set of traits such as `roomsToClean` for a `Vacuum`. Indoor devices are assigned room and outdoor devices are assigned to a home.
+
+Each device must have a sensor to trigger its functioanlity. Such sensor can be a `ManualDetector` which represents remote control which accepts input from user for example. I have decided not to use single hub, which would mediate inputs from sensors to devices but rather a complex network of individual devices which communicate directly with corresponding sensors. I find such hub as unnecessary bottleneck.
+
+Chcecks and predicates are inspired by lecture and [alloy tutorial](http://alloytools.org/tutorials/online/frame-FS-6.html) where original and new states are used. I used suffix *N* to represent new states.

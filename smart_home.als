@@ -24,7 +24,8 @@ one sig Home {
 
 sig Room {
 	id : one Int,
-	devices : set Device
+	devices : set Device,
+	state : one DirtyinessState
 }
 
 
@@ -159,6 +160,9 @@ assert all_devices_are_in_a_room_in_the_house {
 assert if_room_has_device_device_has_room {
 	all dev : IndoorDevice | some rum : Room | dev in rum.devices <=> rum in dev.room
 }
+assert all_rooms_are_dirty_or_clean {
+	all rum : Room | some st : DirtyinessState | rum.state = st
+}
 
 ----------------------------------------CHECKS
 
@@ -169,6 +173,7 @@ check all_devices_have_at_least_one_sensor for 5
 check one_home_has_all_outdoor_devices for 5
 check all_devices_are_in_a_room_in_the_house for 5
 check if_room_has_device_device_has_room for 5
+check all_rooms_are_dirty_or_clean for 5
 
 ----------------------------------------PREDICATES
 
@@ -305,3 +310,4 @@ feederGetsFilledOkay : check {
 
 pred myInst {}
 run myInst for 10
+run myInst for 10 but exactly 1 Home, exactly 3 Room, exactly 6 Device
